@@ -35,7 +35,7 @@ export default function LoginPage() {
   }
 
   const googleSignin = () => {
-    signIn('google', callbackUrl)
+    signIn('google')
   }
 
   useEffect(() => {
@@ -157,6 +157,7 @@ export default function LoginPage() {
 
                 <button className="text-[#346BD4]">Forgot Password?</button>
                 <button
+                  disabled={buttonDisabled}
                   onClick={onLogin}
                   className="p-2 bg-[#000] w-full text-[#fff] rounded-md text-bold-700"
                 >
