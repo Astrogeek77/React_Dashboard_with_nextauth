@@ -1,20 +1,60 @@
 'use client'
 import Image from 'next/image'
 import { useState } from 'react'
-import { UserData } from '../data'
+import { UserGainLostData } from '../data'
+import { ProfitData } from '../data'
 
-import BarChart from '../components/BarChart'
-import LineChart from '../components/LineChart'
-import PieChart from '../components/PieChart'
+import BarChart from '../charts/BarChart'
+import LineChart from '../charts/LineChart'
+import PieChart from '../charts/PieChart'
+import RadarChart from '../charts/RadarChart'
+import ScatterChart from '../charts/ScatterChart'
+import PolarAreaChart from '../charts/PolarAreaChart'
 
 export default function Home() {
   const [showSidebar, setShowSidebar] = useState(false)
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
+  const [usersGainedData, setUserGainedData] = useState({
+    labels: UserGainLostData.map((data) => data.year),
     datasets: [
       {
         label: 'Users Gained',
-        data: UserData.map((data) => data.userGain),
+        data: UserGainLostData.map((data) => data.userGain),
+        backgroundColor: [
+          'rgba(75,192,192,1)',
+          '#ecf0f1',
+          '#50AF95',
+          '#f3ba2f',
+          '#2a71d0',
+        ],
+        borderColor: 'black',
+        borderWidth: 2,
+      },
+    ],
+  })
+  const [usersLostData, setUser] = useState({
+    labels: UserGainLostData.map((data) => data.year),
+    datasets: [
+      {
+        label: 'Users Lost',
+        data: UserGainLostData.map((data) => data.userLost),
+        backgroundColor: [
+          'rgba(75,192,192,1)',
+          '#ecf0f1',
+          '#50AF95',
+          '#f3ba2f',
+          '#2a71d0',
+        ],
+        borderColor: 'black',
+        borderWidth: 2,
+      },
+    ],
+  })
+  const [profitData, setProfitData] = useState({
+    labels: ProfitData.map((data) => data.year),
+    datasets: [
+      {
+        label: 'Profit Percentage',
+        data: ProfitData.map((data) => data.profitPercentage),
         backgroundColor: [
           'rgba(75,192,192,1)',
           '#ecf0f1',
@@ -29,14 +69,14 @@ export default function Home() {
   })
 
   const getSidebarClassList = () => {
-    let sidebarClassList: string =
+    let sidebarClassList =
       'bg-[#000] items-center justify-center col-span-1 rounded-md '
 
     sidebarClassList += showSidebar ? 'flex' : 'hidden'
-    return sidebarClassList as string
+    return sidebarClassList
   }
 
-  const sidebarClassList: string =
+  const sidebarClassList =
     'bg-[#000] rounded-md p-4 max-w-[280px] text-[#fff]' + showSidebar
       ? 'flex'
       : 'hidden'
@@ -205,7 +245,7 @@ export default function Home() {
       <div className="bg-[#F5F5F5] col-span-7 flex flex-col flex-auto p-4 justify-center items-center gap-2">
         {/* Header */}
         <div className="w-full flex items-center justify-between">
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center text-lg md:text-3xl">
             <h2>Dashbaord</h2>
           </div>
           <div className="flex gap-4 items-center">
@@ -314,17 +354,48 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <hr />
+        {/* Charts */}
+        <div className="flex flex-wrap gap-x-16 gap-y-4 mt-8 justify-center">
+          <h3 className="w-full text-xl text-center font-bold mt-8">
+            Users Gained / Lost
+          </h3>
+          <div className="bg-[#fff] p-4 lg:aspect-sqaure lg:flex-auto text-center flex justify-center items-center">
+            <LineChart chartData={usersGainedData} />
+          </div>
+          <div className="bg-[#fff] p-4 lg:aspect-sqaure lg:flex-auto text-center flex justify-center items-center">
+            <LineChart chartData={usersLostData} />
+          </div>
+          <h3 className="w-full text-xl text-center font-bold mt-8">
+            Profit Percentages over years
+          </h3>
+          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+            <BarChart chartData={profitData} />
+          </div>
+          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+            <RadarChart chartData={profitData} />
+          </div>
 
-        <div className="flex flex-wrap gap-4 w-full mt-8 justify-evenly ">
-          <div className="bg-[#fff] w-80 md:w-1/3 h-auto text-center flex justify-center">
-            <LineChart chartData={userData} />
+          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+            <ScatterChart chartData={profitData} />
           </div>
-          <div className="bg-[#fff] w-80 md:w-1/3 h-auto text-center flex justify-center ">
-            <BarChart chartData={userData} />
+
+          <h3 className="w-full text-xl text-center font-bold mt-8">
+            Profit Percentages over years
+          </h3>
+          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+            <PolarAreaChart chartData={profitData} />
           </div>
-          <div className="bg-[#fff] w-80 md:w-1/3 h-auto text-center flex justify-center ">
-            <PieChart chartData={userData} />
+          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+            <PieChart chartData={profitData} />
           </div>
+        </div>
+
+        <div className="w-full mt-8">
+          <ul>
+            <li>Adam Joined</li>
+            <li>Emel left</li>
+          </ul>
         </div>
       </div>
     </main>
