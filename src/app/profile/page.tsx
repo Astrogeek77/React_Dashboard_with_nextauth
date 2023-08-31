@@ -113,19 +113,19 @@ export default function ProfilePage() {
   )
 }
 
-export async function getServerSideProps({ req }: any) {
-  const session = await getSession({ req })
+// export async function getServerSideProps({ req }: any) {
+//   const session = await getSession({ req })
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false,
+//       },
+//     }
+//   }
 
-  return {
-    props: { session },
-  }
-}
+//   return {
+//     props: { session },
+//   }
+// }
