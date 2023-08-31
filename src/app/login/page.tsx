@@ -200,7 +200,7 @@ export default function LoginPage() {
               </div>
             </div>
             <p className="text-center w-full">
-              Don't have an account?{' '}
+              Do not have an account?
               <Link className="text-[#346BD4]" href="/signup">
                 Register here
               </Link>

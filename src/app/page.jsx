@@ -1,4 +1,5 @@
 'use client'
+// ts-ignore
 import Image from 'next/image'
 import { useState } from 'react'
 import { UserGainLostData } from '../data'
@@ -275,7 +276,7 @@ export default function Home() {
               />
             </svg>
             <button onClick={toggleSidebar}>
-              <img className="w-6" src="/nav.svg" alt="" />
+              <Image className="w-6" src="/nav.svg" alt="" />
             </button>
           </div>
         </div>
