@@ -3,12 +3,13 @@ import axios from 'axios'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSession, getSession, signOut } from 'next-auth/react'
+// import { useSession, getSession, signOut } from 'next-auth/react'
 import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ProfilePage() {
   const router = useRouter()
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
   const [data, setData] = useState('nothing')
   const logout = async () => {
     try {
@@ -23,7 +24,7 @@ export default function ProfilePage() {
         progress: undefined,
         theme: 'light',
       })
-      toast.info('Redirecting to Dashbaord page', {
+      toast.info('Redirecting to Login page', {
         position: 'bottom-right',
         autoClose: 4000,
         hideProgressBar: false,
@@ -33,7 +34,7 @@ export default function ProfilePage() {
         progress: undefined,
         theme: 'light',
       })
-      setTimeout(() => router.push('/'), 4000)
+      setTimeout(() => router.push('/login'), 4000)
     } catch (error: any) {
       console.log(error.message)
       toast.error(error.message, {
@@ -83,12 +84,12 @@ export default function ProfilePage() {
           Logout
         </button>
 
-        <button
+        {/* <button
           onClick={() => signOut}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Google Logout
-        </button>
+        </button> */}
 
         <button
           onClick={getUserDetails}
