@@ -3,7 +3,8 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { signIn, useSession } from 'next-auth/react'
 
 export default function LoginPage() {
@@ -22,20 +23,50 @@ export default function LoginPage() {
       setLoading(true)
       const response = await axios.post('/api/users/login', user)
       console.log('Login success', response.data)
-      toast.success('User login successful')
-      toast.loading('Redirecting to profile page')
-      setTimeout(() => router.push('/profile'), 1000)
+      toast.success('User loggedin successfully.', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+      toast.info('Redirecting to Dashbaord page', {
+        position: 'bottom-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+      setTimeout(() => router.push('/'), 4000)
     } catch (error: any) {
-      console.log('Login failed', error.message)
-      toast.error(error.message)
+      console.log(error)
+      toast.error(error.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
     } finally {
       setLoading(false)
-      setTimeout(() => toast.dismiss(), 500)
     }
   }
 
   const googleSignin = () => {
-    signIn('google')
+    signIn('google', { callbackUrl: 'http://localhost:3000' })
+  }
+
+  const githubSignin = () => {
+    signIn('github', { callbackUrl: 'http://localhost:3000' })
   }
 
   useEffect(() => {
@@ -58,7 +89,7 @@ export default function LoginPage() {
           <div className="flex flex-col flex-auto p-4 justify-center items-center md:items-start  gap-2">
             <h2 className="text-4xl text-bold-700">Signin</h2>
             <p className="text-bold-400 mb-4">Sign in to your account</p>
-            <div className="flex gap-4 mb-2 flex-wrap w-full justify-between text-sm text-[#858585] ">
+            {/* <div className="flex gap-4 mb-2 flex-wrap w-full justify-between text-sm text-[#858585] ">
               <button
                 onClick={googleSignin}
                 className="p-1 px-4 bg-[#fff] rounded-md flex items-center gap-2"
@@ -96,7 +127,10 @@ export default function LoginPage() {
                 </svg>
                 Sign in with Google
               </button>
-              <button className="p-1 px-4 bg-[#fff] rounded-md flex items-center gap-2">
+              <button
+                onClick={githubSignin}
+                className="p-1 px-4 bg-[#fff] rounded-md flex items-center gap-2"
+              >
                 <svg
                   width="12"
                   height="14"
@@ -118,7 +152,7 @@ export default function LoginPage() {
                 </svg>
                 Sign in with apple
               </button>
-            </div>
+            </div> */}
 
             <div className="bg-[#fff] p-4 rounded-md text-base self-center w-full h-auto md:w-96">
               <div className="flex flex-col flex-flow-col gap-4  p-4 items-start">
@@ -157,11 +191,11 @@ export default function LoginPage() {
 
                 <button className="text-[#346BD4]">Forgot Password?</button>
                 <button
-                  disabled={buttonDisabled}
+                  disabled={loading}
                   onClick={onLogin}
                   className="p-2 bg-[#000] w-full text-[#fff] rounded-md text-bold-700"
                 >
-                  Sign in
+                  {!loading ? 'Sign in' : 'Loading...'}
                 </button>
               </div>
             </div>
@@ -173,8 +207,19 @@ export default function LoginPage() {
               .
             </p>
           </div>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
-        <Toaster />
       </main>
     </>
   )

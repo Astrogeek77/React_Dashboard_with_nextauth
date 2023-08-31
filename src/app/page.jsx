@@ -228,7 +228,7 @@ export default function Home() {
               </a>
             </li>
           </ul>
-          <ul className="text-sm text-center mt-60">
+          <ul className="text-base text-center mt-60">
             <li className="">
               <a href="#" className="flex w-full p-2 justify-center gap-4">
                 Help
@@ -237,6 +237,14 @@ export default function Home() {
             <li className="">
               <a href="#" className="flex w-full p-2 justify-center gap-4">
                 Contact us
+              </a>
+            </li>
+            <li className="">
+              <a
+                href="/profile"
+                className="flex w-full p-2 justify-center gap-4"
+              >
+                Profile
               </a>
             </li>
           </ul>
@@ -273,7 +281,7 @@ export default function Home() {
         </div>
         {/* Cards */}
         <div className="flex mt-8 gap-2 justify-evenly w-full flex-wrap text-xl">
-          <div className="bg-[#DDEFE0] p-4 w-60 rounded-xl flex flex-col">
+          <div className="bg-[#DDEFE0] p-4 w-72 lg:w-96 rounded-xl flex flex-col">
             <div className="text-right ms-auto mb-4">
               <svg
                 width="27"
@@ -293,7 +301,7 @@ export default function Home() {
               <p className="font-bold">$2,129,430</p>
             </div>
           </div>
-          <div className="bg-[#F4ECDD] p-4 w-60 rounded-xl flex flex-col">
+          <div className="bg-[#F4ECDD] p-4 w-72 lg:w-96 rounded-xl flex flex-col">
             <div className="text-right ms-auto mb-4">
               <svg
                 width="21"
@@ -313,7 +321,7 @@ export default function Home() {
               <p className="font-bold">1,500</p>
             </div>
           </div>
-          <div className="bg-[#EFDADA] p-4 w-60 rounded-xl flex flex-col">
+          <div className="bg-[#EFDADA] p-4 w-72 lg:w-96 rounded-xl flex flex-col">
             <div className="text-right ms-auto mb-4">
               <svg
                 width="24"
@@ -333,7 +341,7 @@ export default function Home() {
               <p className="font-bold">9,201</p>
             </div>
           </div>
-          <div className="bg-[#DDEFE0] p-4 w-60 rounded-xl flex flex-col">
+          <div className="bg-[#DDEFE0] p-4 w-72 lg:w-96 rounded-xl flex flex-col">
             <div className="text-right ms-auto mb-4">
               <svg
                 width="37"
@@ -355,49 +363,83 @@ export default function Home() {
           </div>
         </div>
         <hr />
+        {/* Dashboard Activity */}
+        <div className="w-full mt-8">
+          <h3 className="w-full text-xl text-center font-bold mt-8">
+            Dashboard Activity
+          </h3>
+          <ul className="flex flex-col gap-2 justify-center items-center p-2">
+            <li className="w-full text-center bg-teal-100 text-black px-8 py-4 border-bottom-red-500">
+              Adam Joined
+            </li>
+            <li className="w-full text-center bg-red-100 text-black px-8 py-4 border-bottom-red-500">
+              Emil left
+            </li>
+            <li className="w-full text-center bg-teal-100 text-black px-8 py-4 border-bottom-red-500">
+              Marie Joined
+            </li>
+            <li className="w-full text-center bg-yellow-100 text-black px-8 py-4 border-bottom-red-500">
+              Charts updated
+            </li>
+          </ul>
+        </div>
+        <hr />
         {/* Charts */}
         <div className="flex flex-wrap gap-x-16 gap-y-4 mt-8 justify-center">
           <h3 className="w-full text-xl text-center font-bold mt-8">
             Users Gained / Lost
           </h3>
-          <div className="bg-[#fff] p-4 lg:aspect-sqaure lg:flex-auto text-center flex justify-center items-center">
-            <LineChart chartData={usersGainedData} />
+          <div className="flex flex-grow flex-wrap gap-4 justify-center items-stretch">
+            <div className="bg-[#fff] p-4 lg:w-1/3 text-center flex justify-center items-center">
+              <LineChart chartData={usersGainedData} />
+            </div>
+            <div className="bg-[#fff] p-4 lg:w-1/3 text-center flex justify-center items-center">
+              <LineChart chartData={usersLostData} />
+            </div>
           </div>
-          <div className="bg-[#fff] p-4 lg:aspect-sqaure lg:flex-auto text-center flex justify-center items-center">
-            <LineChart chartData={usersLostData} />
-          </div>
+
           <h3 className="w-full text-xl text-center font-bold mt-8">
             Profit Percentages over years
           </h3>
-          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+          <div className="bg-[#fff] lg:w-1/3 p-4 text-center flex justify-center items-center">
             <BarChart chartData={profitData} />
           </div>
-          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+          <div className="bg-[#fff] lg:w-1/3 p-4 text-center flex justify-center items-center">
             <RadarChart chartData={profitData} />
           </div>
 
-          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+          <div className="bg-[#fff] lg:w-1/3 p-4 text-center flex justify-center items-center">
             <ScatterChart chartData={profitData} />
           </div>
 
           <h3 className="w-full text-xl text-center font-bold mt-8">
             Profit Percentages over years
           </h3>
-          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+          <div className="bg-[#fff] lg:w-1/3 p-4 text-center flex justify-center items-center">
             <PolarAreaChart chartData={profitData} />
           </div>
-          <div className="bg-[#fff] p-4 lg:flex-auto text-center flex justify-center items-center">
+          <div className="bg-[#fff] lg:w-1/3 p-4 text-center flex justify-center items-center">
             <PieChart chartData={profitData} />
           </div>
-        </div>
-
-        <div className="w-full mt-8">
-          <ul>
-            <li>Adam Joined</li>
-            <li>Emel left</li>
-          </ul>
         </div>
       </div>
     </main>
   )
+}
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: { session },
+  }
 }

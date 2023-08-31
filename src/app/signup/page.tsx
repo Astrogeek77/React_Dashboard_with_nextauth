@@ -3,7 +3,8 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -12,6 +13,19 @@ export default function SignupPage() {
     password: '',
     username: '',
   })
+
+  // ts-ignore
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'light',
+  }
+
   const [buttonDisabled, setButtonDisabled] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
@@ -25,21 +39,46 @@ export default function SignupPage() {
       setLoading(true)
       const response = await axios.post('/api/users/signup', user)
       console.log('Signup success', response.data)
-      toast.success('User created successfully.')
-      toast.loading('Redirecting to login page')
+      toast.success('User created successfully.', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+      toast.info('Redirecting to login page', {
+        position: 'bottom-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
       // toast.promise(asyncRouterPush('/login'), {
       //   loading: 'Redirecting to login page',
       //   success: 'Successfully redirected',
       //   error: 'sSomething went wrong',
       // })
-      setTimeout(() => router.push('/login'), 1000)
+      setTimeout(() => router.push('/login'), 4000)
     } catch (error: any) {
       console.log('Signup failed', error.message)
-
-      toast.error(error.message)
+      toast.error(error.message, {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
     } finally {
       setLoading(false)
-      setTimeout(() => toast.dismiss(), 500)
     }
   }
 
@@ -179,11 +218,11 @@ export default function SignupPage() {
 
                 <button className="text-[#346BD4]">Forgot Password?</button>
                 <button
-                  disabled={buttonDisabled}
+                  disabled={loading}
                   onClick={onSignup}
                   className="p-2 bg-[#000] w-full text-[#fff] rounded-md text-bold-700"
                 >
-                  Sign up
+                  {!loading ? 'Sign up' : 'Loading...'}
                 </button>
               </div>
             </div>
@@ -195,8 +234,19 @@ export default function SignupPage() {
               .
             </p>
           </div>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
-        <Toaster />
       </main>
     </>
   )
